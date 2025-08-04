@@ -16,10 +16,14 @@ def read_root():
     """
     Example API
     """
-    return {"Hello": "woozzaaaald"}
+    return {"alive"}
 
 @app.post("/v1/scrape/")
 def trigger_scrape(request: ScrapeRequest):
+    """
+    Scrape the articles API
+    could come with more params later how old they should me, what topics to pick.. .etc
+    """
     success = scrape_url(request.url)
 
     return JSONResponse(content=success)
