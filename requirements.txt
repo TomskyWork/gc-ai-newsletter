@@ -1,0 +1,9 @@
+Crawl4AI==0.7.2
+fastapi==0.116.1
+pydantic==2.12.0a1
+python-dotenv==1.1.1
+uvicorn==0.35.0
+
+
+
+
