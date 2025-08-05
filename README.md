@@ -26,7 +26,7 @@ python-dotenv?
 go to the above 'docs' url and use the POST request with the body
 
 ```json
-"url" : "https://newsletter.pragmaticengineer.com/"
+"url":"https://newsletter.pragmaticengineer.com/"
 ```
 
 ## AWS Bedrock & Langchain

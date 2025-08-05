@@ -7,7 +7,7 @@ class Article(BaseModel):
 
 substack_article_list_schema = {
     "title": "Substack Articles",
-    "baseSelector": "div[role]",    # Repeated elements
+    "baseSelector": "div[role]",    # Repeated elements  'div[role="navigation"]'
     "fields": [
         {
             "name": "article_title",

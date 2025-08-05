@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 
-from app.scraper import scrape_url
+from scraper import scrape_url
 
 
 class ScrapeRequest(BaseModel):

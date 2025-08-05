@@ -1,5 +1,8 @@
 Crawl4AI==0.7.2
 fastapi==0.116.1
+langchain==0.3.27
+langchain-google-genai==2.1.8
+langchain-ollama==0.3.6
 pydantic==2.12.0a1
 python-dotenv==1.1.1
 uvicorn==0.35.0
