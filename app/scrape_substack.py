@@ -78,7 +78,7 @@ async def get_substack_articles(page_url:str):
         return data
 
 
-async def scrape_relevant_articles(links: List[str]):
+async def scrape_relevant_articles(articles: List):
     browser_config = BrowserConfig(verbose=True)
 
     run_config = CrawlerRunConfig(
@@ -113,12 +113,10 @@ async def scrape_relevant_articles(links: List[str]):
     )
 
     async with AsyncWebCrawler(config=browser_config) as crawler:
-        scraped_pages=[]
 
-        for link in links:
-            data = await get_article(link, crawler, run_config)
-            item = {'url': link, 'page': data}
-            scraped_pages.append(item)
+        for item in articles:
+            data = await get_article(item["article_link"], crawler, run_config)
+            item['page']= data
 
         # for page in scraped_pages:
         #     print(f'\n\npage: {page["url"]} \n{page["page"]}')
@@ -131,8 +129,8 @@ async def scrape_relevant_articles(links: List[str]):
         #
 
 
-        if scraped_pages:
-            for article in scraped_pages:
+        if articles:
+            for article in articles:
                 prompt = """
                     # Task
                     Provide very short summary of provided article {article}.
@@ -147,7 +145,7 @@ async def scrape_relevant_articles(links: List[str]):
                 chain = prompt | model | StrOutputParser()
                 summary = chain.invoke({"article": article['page'][:500]})  # limiting the page text to 500 chars for speed
                 article['ai_summary']=summary
-        return scraped_pages
+        return articles
 
 
 

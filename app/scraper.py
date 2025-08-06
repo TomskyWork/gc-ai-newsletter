@@ -24,9 +24,9 @@ def scrape_url(url: str):
         #
         # SCRAPING all the pages from the list of articles above
         #
-        links = [article['article_link'] for article in articles if article['article_link']!='#']
-        print(json.dumps(links, indent=2) if links else "No data found")
-        summary= asyncio.run(scrape_relevant_articles(links))
+        #links = [article['article_link'] for article in articles if article['article_link']!='#']
+        #print(json.dumps(links, indent=2) if links else "No data found")
+        summary= asyncio.run(scrape_relevant_articles(articles))
 
 
         return summary
