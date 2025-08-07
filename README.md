@@ -27,7 +27,7 @@ press play button in the IDE
 
 ### Test substack scraping
 
-go to the above 'docs' url and use the POST request with the body
+go to the above 'docs' url endpoint, and use the POST request with the body
 
 ```json
 "url":"https://newsletter.pragmaticengineer.com/"
@@ -35,6 +35,10 @@ go to the above 'docs' url and use the POST request with the body
 
 ## AWS Bedrock & Langchain
 https://python.langchain.com/docs/integrations/llms/bedrock/
+
+Amazon BEdrock Claudi AI models are only available in US or EU-Central-1
+
+https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
 
 ## Python Packages used
 
@@ -45,6 +49,8 @@ https://python.langchain.com/docs/integrations/llms/bedrock/
 [Uvicorn](https://www.uvicorn.org/) - Async server
 
 [Langchain](https://www.langchain.com/) - AI agentic framework
+
+Langchain-aws - used to connect to AWS Bedrock 
 
 ## Docker (not working currently - can't pull the packages , certs issue)
 

@@ -10,16 +10,28 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import ChatOllama
+from langchain_aws import ChatBedrock, BedrockLLM
 
-from article import substack_article_list_schema, Article
+from article import substack_article_list_schema
 
 load_dotenv()
 USE_OLLAMA = os.getenv("USE_OLLAMA")
+USE_AWS_BEDROCK = os.getenv("USE_AWS_BEDROCK")
 OLLAMA_LLM_MODEL = os.getenv("OLLAMA_LLM_MODEL")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GOOGLE_LLM_MODEL = os.getenv("GOOGLE_LLM_MODEL")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN")
 
-if not USE_OLLAMA:
+if USE_OLLAMA:
+    model = ChatOllama(
+        model=OLLAMA_LLM_MODEL,
+        temperature=0,
+        reasoning= False,
+    )
+
+if not USE_OLLAMA and not USE_AWS_BEDROCK:
     model = ChatGoogleGenerativeAI(
         model=GOOGLE_LLM_MODEL,
         temperature=0,
@@ -27,13 +39,23 @@ if not USE_OLLAMA:
         timeout=30,
         max_retries=2,
     )
+elif USE_AWS_BEDROCK:
 
-if USE_OLLAMA:
-    model = ChatOllama(
-        model=OLLAMA_LLM_MODEL,
+
+    model = ChatBedrock(
+        model="anthropic.claude-v2",
+        #provider="<ARN>",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        aws_session_token=AWS_SESSION_TOKEN,
+        #beta_use_converse_api=True,
         temperature=0,
-        reasoning= False
+        max_tokens=None,
     )
+
+
+
+
 
 
 
