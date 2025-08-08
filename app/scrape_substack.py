@@ -39,10 +39,8 @@ if not USE_OLLAMA and not USE_AWS_BEDROCK:
         timeout=30,
         max_retries=2,
     )
-elif USE_AWS_BEDROCK:
-
-
-    model = ChatBedrock(
+if not USE_OLLAMA and USE_AWS_BEDROCK:
+     model = ChatBedrock(
         model="anthropic.claude-v2",
         #provider="<ARN>",
         aws_access_key_id=AWS_ACCESS_KEY_ID,
