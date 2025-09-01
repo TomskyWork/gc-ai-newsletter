@@ -1,11 +1,12 @@
 from pydantic import BaseModel
 
+#TODO is this needed?
 class Article(BaseModel):
     title: str
     date: str
     link: str
 
-substack_article_list_schema = {
+pragmatic_programmer_article_list_schema = {
     "title": "Substack Articles",
     "baseSelector": "div[role]",    # Repeated elements  'div[role="navigation"]'
     "fields": [

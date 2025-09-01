@@ -10,12 +10,12 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import ChatOllama
-from langchain_aws import ChatBedrock, BedrockLLM
+from langchain_aws import ChatBedrock
 
-from article import substack_article_list_schema
+from models.article import pragmatic_programmer_article_list_schema
 
 load_dotenv()
-USE_OLLAMA = os.getenv("USE_OLLAMA")
+USE_LOCAL_OLLAMA = os.getenv("USE_LOCAL_OLLAMA")
 USE_AWS_BEDROCK = os.getenv("USE_AWS_BEDROCK")
 OLLAMA_LLM_MODEL = os.getenv("OLLAMA_LLM_MODEL")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -24,14 +24,14 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN")
 
-if USE_OLLAMA:
+if USE_LOCAL_OLLAMA:
     model = ChatOllama(
         model=OLLAMA_LLM_MODEL,
         temperature=0,
         reasoning= False,
     )
 
-if not USE_OLLAMA and not USE_AWS_BEDROCK:
+if not USE_LOCAL_OLLAMA and not USE_AWS_BEDROCK:
     model = ChatGoogleGenerativeAI(
         model=GOOGLE_LLM_MODEL,
         temperature=0,
@@ -39,7 +39,7 @@ if not USE_OLLAMA and not USE_AWS_BEDROCK:
         timeout=30,
         max_retries=2,
     )
-if not USE_OLLAMA and USE_AWS_BEDROCK:
+if not USE_LOCAL_OLLAMA and USE_AWS_BEDROCK:
      model = ChatBedrock(
         model="anthropic.claude-v2",
         #provider="<ARN>",
@@ -51,15 +51,9 @@ if not USE_OLLAMA and USE_AWS_BEDROCK:
         max_tokens=None,
     )
 
-
-
-
-
-
-
 async def get_substack_articles(page_url:str):
 
-    extraction_strategy = JsonCssExtractionStrategy(substack_article_list_schema, verbose=True)
+    extraction_strategy = JsonCssExtractionStrategy(pragmatic_programmer_article_list_schema, verbose=True)
 
     scraper_config = CrawlerRunConfig(
         # Content filtering
@@ -71,6 +65,7 @@ async def get_substack_articles(page_url:str):
         # Content processing
         process_iframes=False,
         remove_overlay_elements=True,
+        check_robots_txt=True,
 
         # CSS selection or entire page
         css_selector="div.portable-archive-list",
@@ -168,10 +163,9 @@ async def scrape_relevant_articles(articles: List):
         return articles
 
 
-
 async def get_article(page_url:str, crawler, config):
     """
-    Async function to get a single article content in the markdown format
+    Async function to get a single article full page content in the Markdown format
     :param page_url:
     :param crawler:
     :param config:

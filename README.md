@@ -30,7 +30,11 @@ press play button in the IDE
 go to the above 'docs' url endpoint, and use the POST request with the body
 
 ```json
-"url":"https://newsletter.pragmaticengineer.com/"
+{
+  "scrapeSchema": "pragmatic_programmer_blog_schema",
+  "url": "https://newsletter.pragmaticengineer.com/",
+  "tags": []
+}
 ```
 
 ## AWS Bedrock & Langchain
@@ -51,6 +55,12 @@ https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
 [Langchain](https://www.langchain.com/) - AI agentic framework
 
 Langchain-aws - used to connect to AWS Bedrock 
+
+## Bedrock model profiles
+
+https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html
+
+
 
 ## Docker (not working currently - can't pull the packages , certs issue)
 
