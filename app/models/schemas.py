@@ -4,6 +4,7 @@ from typing import List
 
 class SchemaEnum(str, Enum):
     pragmatic_programmer_blog_schema = 'pragmatic_programmer_blog_schema'
+    troy_hunt_blog_schema = 'troy_hunt_blog_schema'
     unspecified_schema = 'unspecified_schema'
 
 class ScrapeRequest(BaseModel):

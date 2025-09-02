@@ -34,8 +34,14 @@ go to the above 'docs' url endpoint, and use the POST request with the body
   "scrapeSchema": "pragmatic_programmer_blog_schema",
   "url": "https://newsletter.pragmaticengineer.com/",
   "tags": []
+},
+{
+  "scrapeSchema": "troy_hunt_blog_schema",
+  "url": "https://www.troyhunt.com/",
+  "tags": []
 }
 ```
+
 
 ## AWS Bedrock & Langchain
 https://python.langchain.com/docs/integrations/llms/bedrock/
