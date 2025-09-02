@@ -30,14 +30,15 @@ async def trigger_scrape_all(request: ScrapeAllRequest,settings: Annotated[Setti
     AI model adds the ai_summary
     Write the articles to DB
     """
-    articles = await scrape_all_articles(request.urls)
+    if request.urls is not None:
+        for item in request.urls:
+            res = await scrape_all_articles(item)
+            for article in res:
+                summary = create_ai_summary(article['page'],settings)
+                article['ai_summary'] = summary
+                save_article(article,settings)
 
-    for article in articles:
-        summary = create_ai_summary(article['page'],settings)
-        article['ai_summary'] = summary
-        save_article(article,settings)
-
-    return JSONResponse(content=articles)
+    return JSONResponse(content="done", status_code=200)
 
 
 

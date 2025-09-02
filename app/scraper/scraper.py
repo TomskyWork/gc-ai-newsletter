@@ -5,7 +5,7 @@ from .pragmatic_programmer.scrape import get_pragmatic_programmer_articles
 from .troy_hunt_blog.scrape import get_troy_hunt_articles
 
 
-def scrape_all_articles(urls: List[UrlScrapeSchema]):
+def scrape_all_articles(item:UrlScrapeSchema):
     """
     Scrape URLs for the specific blog / newsletter
     Returns Bool
@@ -22,19 +22,17 @@ def scrape_all_articles(urls: List[UrlScrapeSchema]):
     # maybe in ai_summary it can contain multiple prompts and responses ? for comparison..
     # create endpoint that can review the article n summary n run different prompt and add those to ai_summary fields
 
-    if urls is not None:
-        for item in urls:
-            match item.scrapeSchema:
-                case SchemaEnum.pragmatic_programmer_blog_schema:
-                    articles = get_pragmatic_programmer_articles(item.url)
-                    return articles
-                case SchemaEnum.troy_hunt_blog_schema:
-                    articles = get_troy_hunt_articles(item.url)
-                    return articles
-                case SchemaEnum.unspecified_schema:
-                    pass
-                case _:
-                    pass
+    match item.scrapeSchema:
+        case SchemaEnum.pragmatic_programmer_blog_schema:
+            articles = get_pragmatic_programmer_articles(item.url)
+            return articles
+        case SchemaEnum.troy_hunt_blog_schema:
+            articles = get_troy_hunt_articles(item.url)
+            return articles
+        case SchemaEnum.unspecified_schema:
+            pass
+        case _:
+            pass
 
 
 
